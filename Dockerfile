@@ -1,13 +1,12 @@
 FROM python:3.8-slim
 
 # Set environment variables for application configuration
-ENV recaptcha_public=$RECAPTCHA_PUBLIC \
-    recaptcha_private=$RECAPTCHA_PRIVATE \
-    discord_welcome_room=$DISCORD_WELCOME_ROOM \
-    discord_private=$DISCORD_PRIVATE \
-    image_background=$IMAGE_BACKGROUND \
-    image_wordmark=$IMAGE_WORDMARK \
-    PORT=$PORT
+ENV RECAPTCHA_PUBLIC=$RECAPTCHA_PUBLIC \
+    RECAPTCHA_PRIVATE=$RECAPTCHA_PRIVATE \
+    DISCORD_WELCOME_ROOM=$DISCORD_WELCOME_ROOM \
+    DISCORD_PRIVATE=$DISCORD_PRIVATE \
+    PORT=$PORT \
+    PYTHONUNBUFFERED=1
 
 # Create a system group named "docker"
 RUN groupadd -r docker
@@ -26,6 +25,7 @@ USER docker
 
 # Copy the necessary files
 COPY etc ./etc
+COPY static ./static
 COPY templates ./templates
 COPY app.py ./app.py
 COPY requirements.txt ./requirements.txt
